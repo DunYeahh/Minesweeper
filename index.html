@@ -8,9 +8,13 @@
         <link rel="stylesheet" href="css/main.css" />
     </head>
 
-    <body onload="onInit()">
+    <body><!--  onload="onInit()" -->
 
         <h1>Minesweeper</h1>
+        <button onclick="onInit(4)">Beginner</button>
+        <button onclick="onInit(8)">Medium</button>
+        <button onclick="onInit(12)">Expert</button>
+        <div class="lives">❤️❤️❤️</div>
         
         <table class="board">
             <tbody class="board-cell"> </tbody>

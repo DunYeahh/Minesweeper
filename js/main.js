@@ -2,26 +2,57 @@
 
 const MINE = '💣'
 const MARK = '🚩'
+const LIVE = '❤️'
 
 var gBoard = []
 
 var gLevel = { 
-    SIZE: 4, 
-    MINES: 2 
+    SIZE: 0, 
+    MINES: 0 
 } 
 
 var gGame = { 
     isOn: false, 
     revealedCount: 0, 
-    markedCount: 0, //address this
-    secsPassed: 0  //address this
+    markedCount: 0,
+    secsPassed: 0,  //address this
+    livesCount: 3
 } 
 
-function onInit(){
+function onInit(size){
+    refreshGame()
+    defineBoard(size)
     gGame.isOn = true
     gBoard = buildBoard()
     console.log('gBoard: ', gBoard)
     renderBoard(gBoard)
+}
+
+function refreshGame(){
+    gGame.isOn = false
+    gGame.revealedCount = 0
+    gGame.markedCount = 0
+    gGame.livesCount = 3
+    renderLives(3)
+}
+
+
+function defineBoard(size){
+    if (size === 4){
+        gLevel.SIZE = 4
+        gLevel.MINES = 2
+        return
+    }
+    if (size === 8){
+        gLevel.SIZE = 8
+        gLevel.MINES = 14
+        return
+    }
+    if (size === 12){
+        gLevel.SIZE = 12
+        gLevel.MINES = 32
+        return
+    }
 }
 
 function buildBoard(){
@@ -49,7 +80,7 @@ for (var i = 0; i < gLevel.SIZE; i++) {
     return board
 }
 
-function placeCellsContent(board, clickedI, clickedJ){
+function placeCellsContent(board, clickedI=null, clickedJ=null){
     var placedMines = 0
 
     //placing mines
@@ -97,7 +128,7 @@ function countMinesNegs(board, rowIdx, colIdx) {
     return count
 }
 
-function renderBoard(board){
+function renderBoard(board, rowIdx, colIdx){
     var strHTML = ''
     var cell
     
@@ -112,13 +143,19 @@ function renderBoard(board){
                 tdAddition = ` <span>${MINE}</span> ` // For a cell that contains a MINE
             } else if (cell.minesAroundCount !== 0) {
                 tdAddition = ` <span>${cell.minesAroundCount}</span> ` // For a cell that is NEXT TO A MINE add the number
-            } else {
-                className += ' empty' // For a cell that is EMPTY add an empty class
             } 
-
-            strHTML += `\t<td data-i="${i}" data-j="${j}" class="cell${className}"
-            onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu="onCellMarked(this); return false;" >${tdAddition}
+            if (i === rowIdx && j === colIdx){
+                //console.log('strHTML of clicked: ', strHTML)
+                strHTML += `\t<td data-i="${i}" data-j="${j}" class="cell clicked"
+            onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu="onCellMarked(this, ${i}, ${j}); return false;" >${tdAddition}
             </td>\n`
+            } else {
+                strHTML += `\t<td data-i="${i}" data-j="${j}" class="cell${className}"
+                onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu="onCellMarked(this, ${i}, ${j}); return false;" >${tdAddition}
+                </td>\n`
+                //console.log('strHTML: ', strHTML)
+            }
+            
         }
         strHTML += `</tr>\n`
         //console.log('strHTML: ', strHTML)
@@ -130,26 +167,105 @@ function renderBoard(board){
 }
 
 function onCellClicked(elCell, i, j){
-    console.log(!gGame.revealedCount)
+    if (gBoard[i][j].isMarked) return
     if (!gGame.revealedCount){
         placeCellsContent (gBoard, i, j)
-        renderBoard (gBoard)
+        renderBoard (gBoard, i, j)
     }
     gGame.revealedCount++
     gBoard[i][j].isCovered = false
-    elCell.classList.remove('notClicked')
-    //if (gBoard[i][j].isMine)
     
+    if (gBoard[i][j].isMine) handleMines(elCell)
+    else handleBlanksAndNums(elCell, i, j)
+
+    checkGameOver()   
 }
 
-function onCellMarked(elCell) {
-    
+function handleMines(elCell){
+    elCell.classList.remove('notClicked')
+    elCell.classList.add('clickedMine')
+    gGame.livesCount--
+    renderLives(gGame.livesCount)
+}
+
+function handleBlanksAndNums(elCell, i, j){
+    if (!gBoard[i][j].minesAroundCount) {
+        expandReveal(gBoard, i, j)
+    } 
+    elCell.classList.remove('notClicked')
+    elCell.classList.add('clicked')
+}
+
+function handleNums(elCell){
+    elCell.classList.remove('notClicked')
+    elCell.classList.add('clicked')
+}
+
+function renderLives(count){
+    var strHTML=''
+    for (var i = 0; i<count; i++){
+        strHTML+=LIVE
+    }
+    var elLives = document.querySelector('.lives')
+    elLives.innerHTML = strHTML
+}
+
+function onCellMarked(elCell, i, j) {
+    if (!gBoard[i][j].isCovered) return
+    if (!gBoard[i][j].isMarked){
+        gBoard[i][j].isMarked = true
+        var value = ` <span>${MARK}</span> `
+        elCell.innerHTML = value
+        elCell.classList.remove('notClicked')
+        gGame.markedCount++
+    } else {
+        gBoard[i][j].isMarked = false
+        var value = getCellHTML(i, j)
+        elCell.innerHTML = value
+        elCell.classList.add('notClicked')
+        gGame.markedCount--
+        console.log('gGame.markedCount: ', gGame.markedCount)
+    }
+    checkGameOver()
+}
+
+function getCellHTML(i, j){
+    var value
+    if (gBoard[i][j].isMine){
+        value = ` <span>${MINE}</span> `
+    } else if (gBoard[i][j].minesAroundCount){
+        value = ` <span>${gBoard[i][j].minesAroundCount}</span> `
+    } else value = ''
+    return value
 }
 
 function checkGameOver(){
 
+    if (gGame.revealedCount + gGame.markedCount === gLevel.SIZE**2){
+        alert ('victory')
+        //victory+restart
+    } else if (gGame.livesCount === 0){
+        alert ('loser')
+        //show all mines
+        //loser+restart
+    }
 }
 
-function expandReveal(board, elCell, i, j) {
-
+function expandReveal(board, rowIdx, colIdx) {
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+        if (i < 0 || i >= board.length) continue
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            if (i === rowIdx && j === colIdx) continue
+            if (j < 0 || j >= board[0].length) continue
+            var currCell = board[i][j]
+            if (!currCell.isMine && currCell.isCovered) {
+                gGame.revealedCount++
+                board[i][j].isCovered = false
+                var elCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`)
+                elCell.classList.remove('notClicked')
+                elCell.classList.add('clicked')
+            }
+            
+        }
+    }
 }

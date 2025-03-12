@@ -1,16 +1,9 @@
-* {
-    box-sizing: border-box;
-}
-
 body {
     background: burlywood;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }
 
-.board {
-    width: 600px;
-}
 
 table {
     border-collapse: separate;
@@ -27,6 +20,10 @@ table {
     display: none;
 }
 
+.clicked {
+    background-color: rgb(61, 140, 145);
+}
+
 footer {
     position: fixed;
     bottom: 0;
@@ -34,5 +31,19 @@ footer {
     width: 100%;
     text-align: center;
     padding: 10px;
+}
+
+.clickedMine {
+    background-color: crimson;
+}
+
+.lives {
+    background-color: coral;
+    border-width: 2px;
+    border: solid;
+    width: 200px;
+    height: 30px;
+    text-align: center;
+    margin-block: 20px;
 }
 
