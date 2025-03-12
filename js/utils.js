@@ -42,11 +42,12 @@ function getRandomColor(){
   return color;
 }
 
-function getRandCell(from,to){
+function getRandCell(from, to){
     var randCell ={
-        i: getRandomIntInclusive(from,to),
-        j: getRandomIntInclusive(from,to)
+        i: getRandomInt(from, to),
+        j: getRandomInt(from, to)
     }
+    //console.log(randCell)
 return randCell
 }
 
@@ -60,3 +61,4 @@ function getEmptyCells(board){
     console.log('emptys: ', emptys)
     return emptys
 }
+
