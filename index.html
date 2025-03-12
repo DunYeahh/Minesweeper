@@ -11,6 +11,7 @@
     <body><!--  onload="onInit()" -->
 
         <h1>Minesweeper</h1>
+        <button class="smile-btn" onclick="onInit()">😀</button>
         <button onclick="onInit(4)">Beginner</button>
         <button onclick="onInit(8)">Medium</button>
         <button onclick="onInit(12)">Expert</button>
@@ -19,6 +20,11 @@
         <table class="board">
             <tbody class="board-cell"> </tbody>
         </table>
+
+        <div class="modal hide">
+            <h2 class="msg"></h2>
+            <button class="restart-btn" onclick="onInit()">Play Again</button>
+        </div>
 
         <footer>
             <p>Dana Ziv</p>

@@ -3,6 +3,9 @@
 const MINE = '💣'
 const MARK = '🚩'
 const LIVE = '❤️'
+const WIN = '😎'
+const LOSE = '🤯'
+const SMILE = '😀'
 
 var gBoard = []
 
@@ -20,6 +23,7 @@ var gGame = {
 } 
 
 function onInit(size){
+    //closeModal()
     refreshGame()
     defineBoard(size)
     gGame.isOn = true
@@ -34,6 +38,8 @@ function refreshGame(){
     gGame.markedCount = 0
     gGame.livesCount = 3
     renderLives(3)
+    var elSmileBtn = document.querySelector('.smile-btn')
+    elSmileBtn.innerHTML = SMILE
 }
 
 
@@ -141,6 +147,7 @@ function renderBoard(board, rowIdx, colIdx){
 
             if (cell.isMine){
                 tdAddition = ` <span>${MINE}</span> ` // For a cell that contains a MINE
+                className += ' mine'
             } else if (cell.minesAroundCount !== 0) {
                 tdAddition = ` <span>${cell.minesAroundCount}</span> ` // For a cell that is NEXT TO A MINE add the number
             } 
@@ -167,7 +174,7 @@ function renderBoard(board, rowIdx, colIdx){
 }
 
 function onCellClicked(elCell, i, j){
-    if (gBoard[i][j].isMarked) return
+    if (gBoard[i][j].isMarked || !gBoard[i][j].isCovered) return
     if (!gGame.revealedCount){
         placeCellsContent (gBoard, i, j)
         renderBoard (gBoard, i, j)
@@ -242,12 +249,19 @@ function getCellHTML(i, j){
 function checkGameOver(){
 
     if (gGame.revealedCount + gGame.markedCount === gLevel.SIZE**2){
-        alert ('victory')
-        //victory+restart
+        var elSmileBtn = document.querySelector('.smile-btn')
+        elSmileBtn.innerHTML = WIN
+        //openModal('Victory!')
     } else if (gGame.livesCount === 0){
-        alert ('loser')
-        //show all mines
-        //loser+restart
+        var elMines = document.querySelectorAll('.mine')
+        for (var i = 0; i<elMines.length; i++){
+            var elMine = elMines[i]
+            elMine.classList.remove('notClicked')
+            elMine.classList.add('clicked')
+        }
+        var elSmileBtn = document.querySelector('.smile-btn')
+        elSmileBtn.innerHTML = LOSE
+        //openModal('Loser :(')
     }
 }
 
