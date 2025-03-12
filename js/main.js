@@ -1,10 +1,9 @@
 'use strict'
 
 const MINE = '💣'
+const MARK = '🚩'
 
 var gBoard = []
-var gSize = 4
-var gMinesInGame = 2
 
 var gLevel = { 
     SIZE: 4, 
@@ -14,11 +13,12 @@ var gLevel = {
 var gGame = { 
     isOn: false, 
     revealedCount: 0, 
-    markedCount: 0, 
-    secsPassed: 0 
+    markedCount: 0, //address this
+    secsPassed: 0  //address this
 } 
 
 function onInit(){
+    gGame.isOn = true
     gBoard = buildBoard()
     console.log('gBoard: ', gBoard)
     renderBoard(gBoard)
@@ -27,12 +27,11 @@ function onInit(){
 function buildBoard(){
 const board=[]
 var cell = {}
-var placedMines = 0
 
 //creating initial board
-for (var i = 0; i < gSize; i++) {
+for (var i = 0; i < gLevel.SIZE; i++) {
     board[i] = []
-    for (var j = 0; j < gSize; j++) {
+    for (var j = 0; j < gLevel.SIZE; j++) {
             cell = {
                 minesAroundCount: 0,
                 isCovered: true, 
@@ -45,12 +44,21 @@ for (var i = 0; i < gSize; i++) {
     }
     //console.table ('board before mines: ', board)
 
+    //console.table ('board after mines: ', board)
+
+    return board
+}
+
+function placeCellsContent(board, clickedI, clickedJ){
+    var placedMines = 0
+
     //placing mines
-    while (placedMines !== gMinesInGame){
-        var randCell = getRandCell(0, gSize)
+    while (placedMines !== gLevel.MINES){
+        var randCell = getRandCell(0, gLevel.SIZE)
         //console.log ('randCell before placing: ', randCell)
         var currRandCell = board[randCell.i][randCell.j]
-        if (!currRandCell.isMine){
+        //console.log ('currRandCell: ', randCell.i,' ',randCell.j, ' clicked: ', clickedI, ' ', clickedJ)
+        if (!currRandCell.isMine && currRandCell !== board[clickedI][clickedJ]){
             currRandCell.isMine = true
             //console.log ('randCell after placing: ', randCell)
             placedMines++
@@ -60,14 +68,11 @@ for (var i = 0; i < gSize; i++) {
 
     //updating minesNegsCount
     setMinesNegsCount(board)
-    //console.table ('board after mines: ', board)
-
-    return board
 }
 
 function setMinesNegsCount(board){
-    for (var i = 0; i < gSize; i++){
-        for (var j = 0; j < gSize; j++){
+    for (var i = 0; i < gLevel.SIZE; i++){
+        for (var j = 0; j < gLevel.SIZE; j++){
             board[i][j].minesAroundCount = countMinesNegs(board, i, j)
             //console.log ('board[i][j].minesAroundCount: ', board[i][j].minesAroundCount)
         }
@@ -96,9 +101,9 @@ function renderBoard(board){
     var strHTML = ''
     var cell
     
-    for (var i = 0; i < gSize; i++) {
+    for (var i = 0; i < gLevel.SIZE; i++) {
         strHTML += `<tr >\n`
-        for (var j = 0; j < gSize; j++) {
+        for (var j = 0; j < gLevel.SIZE; j++) {
             var tdAddition = ''
             var className = ' notClicked'
             cell = board[i][j]
@@ -112,7 +117,7 @@ function renderBoard(board){
             } 
 
             strHTML += `\t<td data-i="${i}" data-j="${j}" class="cell${className}"
-            onclick="onCellClicked(this, ${i}, ${j})" >${tdAddition}
+            onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu="onCellMarked(this); return false;" >${tdAddition}
             </td>\n`
         }
         strHTML += `</tr>\n`
@@ -125,7 +130,20 @@ function renderBoard(board){
 }
 
 function onCellClicked(elCell, i, j){
+    console.log(!gGame.revealedCount)
+    if (!gGame.revealedCount){
+        placeCellsContent (gBoard, i, j)
+        renderBoard (gBoard)
+    }
+    gGame.revealedCount++
+    gBoard[i][j].isCovered = false
     elCell.classList.remove('notClicked')
+    //if (gBoard[i][j].isMine)
+    
+}
+
+function onCellMarked(elCell) {
+    
 }
 
 function checkGameOver(){
