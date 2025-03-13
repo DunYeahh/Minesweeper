@@ -24,9 +24,9 @@ var gGame = {
     isWin: false, 
     revealedCount: 0, 
     markedCount: 0,
-    secsPassed: 0,  //address this
     livesCount: 3,
-    score: Infinity
+    score: Infinity,
+    safeClicksLeft: 3
 } 
 
 function onInit(size){
@@ -47,6 +47,8 @@ function refreshGame(){
     gGame.revealedCount = 0
     gGame.markedCount = 0
     gGame.livesCount = 3
+    gGame.safeClicksLeft = 3
+
     refreshHints()
     renderLives(3)
     clearInterval(gInterval)
@@ -65,10 +67,12 @@ function onCellClicked(elCell, i, j){
         startTimer()
     }
     if (gIsHint){
-        if (!gBoard[i][j].isCovered) return
         gIsHint = false
-        //console.log ('gIsHint (onClicked): ', gIsHint)
+        if (!gBoard[i][j].isCovered) return
         showHint(i, j)
+        setTimeout(() => {
+            showHint(i, j)
+        }, 1500);
         return
     }
     gGame.revealedCount++
@@ -101,16 +105,15 @@ function onCellMarked(elCell, i, j) {
         gBoard[i][j].isMarked = true
         var value = ` <span>${MARK}</span> `
         elCell.innerHTML = value
-        elCell.classList.remove('notClicked')
         gGame.markedCount++
     } else {
         gBoard[i][j].isMarked = false
         var value = getCellHTML(i, j)
         elCell.innerHTML = value
-        elCell.classList.add('notClicked')
         gGame.markedCount--
         //console.log('gGame.markedCount: ', gGame.markedCount)
     }
+    elCell.classList.toggle('notClicked')
     checkGameOver()
 }
 

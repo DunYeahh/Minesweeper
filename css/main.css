@@ -5,20 +5,30 @@ body {
 }
 
 h1 {
-    font-size: 45px;
+    font-size: 25px;
 }
 
 table {
     margin: auto;
-    margin-bottom: 15px;
     border-collapse: separate;
 }
 
+.box {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: linear-gradient(to bottom, #cba2a2, #d0d0d0);
+    border: 1px solid #888;
+    margin-bottom: 10px;
+}
+
+/* .btn-container {
+    border: 2px solid #888;
+} */
 
 .cell {
-    height: 50px;
-    width: 50px;
-    padding: 15px;
+    height: 25px;
+    width: 25px;
+    padding: 8px;
     border: 1px solid #888;
     background: linear-gradient(to bottom, #ffffff, #d0d0d0);
     /* background-color: cadetblue; */
@@ -30,10 +40,9 @@ table {
 }
 
 .clicked {
-    padding: 15px;
+    padding: 8px;
     border: 1px solid #888;
     background: linear-gradient(to bottom, #969595, #e3e2e2);
-    /* background-color: rgb(61, 140, 145); */
 }
 
 footer {
@@ -42,8 +51,7 @@ footer {
     left: 0;
     width: 100%;
     text-align: center;
-    /* padding: 10px; */
-    background-color: #f8bbbb;
+    font-size: 10px;
     }
 
 .clickedMine {
@@ -51,55 +59,54 @@ footer {
 }
 
 .lives {
-    background-color: coral;
+    /* background-color: rgb(251, 251, 251); */
     /* border-width: 0.2px;
     border: solid; */
-    width: 150px;
-    height: 50px;
+    width: 75px;
+    height: 25px;
     text-align: center;
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 30px;
-    background: linear-gradient(to bottom, #f8bbbb, #dc8888);
-    border: 1px solid #888;
-    
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
+    border: 2px solid #888;
 }
 
 .smile-btn {
     display: block;
     cursor: pointer;
-    height: 100px;
-    width: 100px;
-    font-size: 50px;
+    height: 50px;
+    width: 50px;
+    font-size: 25px;
     margin: auto;
 }
 
 button {
-    width: 150px;
-    height: 60px;
+    width: 75px;
+    height: 30px;
     cursor: pointer;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 20px;
-    padding: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 10px;
+    padding: 8px;
     border: 1px solid #888;
     background: linear-gradient(to bottom, #ffffff, #d0d0d0);
 }
 
 .timer {
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 40px;
-    padding: 15px;
-    border: 1px solid #888;
-    width: 150px;
-    background: linear-gradient(to bottom, #f8bbbb, #dc8888);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    padding: 8px;
+    border: 2px solid #888;
+    width: 75px;
+    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
 }
 
 .hints-container button {
-    width: 60px;
+    width: 30px;
 }
 
 .hinted {
@@ -107,13 +114,28 @@ button {
 }
 
 .score-tables-container td, .score-tables-container th {
-    height: 50px;
-    width: 100px;
+    height: 25px;
+    width: 50px;
     border: 1px solid #f3f0f0;
     background: linear-gradient(to bottom, #ffffff, #d0d0d0);
+    font-size: 10px;
+
 }
 
 .score-tables-container table {
     border-spacing: 0;
-    border: 1px solid #888;
+    /* border: 1px solid #888; */
+    display: inline;
+}
+
+.safe-click {
+    display: block;
+    margin: auto;
+    margin-bottom: 8px;
+    width: 100px;
+    height: 40px;
+}
+
+.finished {
+    background: linear-gradient(to bottom, #a1a0a0, #c42020);
 }
