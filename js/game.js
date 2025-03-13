@@ -11,6 +11,7 @@ var gInterval = null
 var gTimer = null
 var gIsHint = false
 var gEmptyCells = []
+var isDark = false
 
 var gBoard = []
 

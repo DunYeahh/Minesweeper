@@ -1,0 +1,158 @@
+body {
+    background:rgb(230, 186, 171);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    font-size: 25px;
+}
+
+.style-btn {
+    position: relative;
+}
+
+.style-btn button {
+    position: fixed;
+    margin-left: 5px;
+    top: 0;  /* Aligns to the top */
+    left: 0; /* Aligns to the left */
+
+}
+
+table {
+    margin: auto;
+    border-collapse: separate;
+}
+
+.box {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: linear-gradient(to bottom, #cba2a2, #d0d0d0);
+    border: 1px solid #888;
+    margin-bottom: 10px;
+}
+
+/* .btn-container {
+    border: 2px solid #888;
+} */
+
+.cell {
+    height: 25px;
+    width: 25px;
+    padding: 8px;
+    border: 1px solid #888;
+    background: linear-gradient(to bottom, #ffffff, #d0d0d0);
+    /* background-color: cadetblue; */
+    cursor: pointer;
+}
+
+.notClicked span {
+    display: none;
+}
+
+.clicked {
+    padding: 8px;
+    border: 1px solid #888;
+    background: linear-gradient(to bottom, #969595, #e3e2e2);
+}
+
+footer {
+    /* position: fixed; */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    /* background-color: #cba2a2; */
+    }
+
+.clickedMine {
+    background: linear-gradient(to bottom, #a1a0a0, #c42020);
+}
+
+.lives {
+    /* background-color: rgb(251, 251, 251); */
+    /* border-width: 0.2px;
+    border: solid; */
+    width: 75px;
+    height: 25px;
+    text-align: center;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
+    border: 2px solid #888;
+}
+
+.smile-btn {
+    display: block;
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    font-size: 25px;
+    margin: auto;
+}
+
+button {
+    width: 75px;
+    height: 25px;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 10px;
+    padding: 8px;
+    border: 1px solid #888;
+    background: linear-gradient(to bottom, #ffffff, #d0d0d0);
+}
+
+.timer {
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    padding: 5px;
+    border: 2px solid #888;
+    width: 65px;
+    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
+}
+
+.hints-container button {
+    width: 30px;
+}
+
+.hinted {
+    background: linear-gradient(to bottom, rgb(244, 226, 121),  #ffffff);
+}
+
+.score-tables-container td, .score-tables-container th {
+    height: 25px;
+    width: 50px;
+    border: 1px solid #f3f0f0;
+    background: linear-gradient(to bottom, #ffffff, #d0d0d0);
+    font-size: 10px;
+
+}
+
+.score-tables-container table {
+    border-spacing: 0;
+    /* border: 1px solid #888; */
+    display: inline;
+}
+
+.score-tables-container {
+    margin-bottom: 50px;
+}
+
+.safe-click {
+    display: block;
+    margin: auto;
+    margin-bottom: 8px;
+    width: 100px;
+    height: 35px;
+}
+
+.finished {
+    background: linear-gradient(to bottom, #a1a0a0, #c42020);
+}

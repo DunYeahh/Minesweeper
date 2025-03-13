@@ -190,3 +190,15 @@ function areSafeCells(board){
     }
     return false
 }
+
+function onStyleMode(elbtn){
+    isDark=!isDark
+
+    if (isDark){
+        document.querySelector("link[rel='stylesheet']").href = "css/dark-mode.css"
+        elbtn.querySelector('span').innerHTML = 'Light'
+    } else{
+        document.querySelector("link[rel='stylesheet']").href = "css/light-mode.css"
+        elbtn.querySelector('span').innerHTML = 'Dark'
+    } 
+}
