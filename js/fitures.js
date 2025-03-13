@@ -30,7 +30,7 @@ function startTimer() {
         clearInterval(gInterval)
         gInterval = null
         gGame.score = getScore(mins, secs)
-        console.log('gGame.score: ', gGame.score)
+        //console.log('gGame.score: ', gGame.score)
         if (gGame.isWin) bestScoreUpdate(gLevel.SIZE)
       }
     }, 1000)
@@ -52,7 +52,7 @@ function refreshHints(){
 }
 
 function showHint(rowIdx, colIdx){
-    console.log('entered showHint')
+    //console.log('entered showHint')
     for (var i = rowIdx-1; i<=rowIdx+1; i++){
         if (i < 0 || i >= gBoard.length) continue
         for (var j = colIdx-1; j<=colIdx+1; j++){
@@ -79,7 +79,7 @@ function showHint(rowIdx, colIdx){
 }
 
 function bestScoreUpdate(level){
-    console.log('entered bestScoreUpdate')
+    //console.log('entered bestScoreUpdate')
     switch (level){
         case 4:
         var levelName = 'beginner-best'
@@ -133,13 +133,13 @@ function onBestScores(){
 }
 
 function getScore(mins, secs){
-    console.log('entered getScore')
+    //console.log('entered getScore')
     if (secs<10){
         secs = '0' + secs
     }
     //console.log('secs: ', secs)
     //console.log('mins: ', mins)
     var score = mins + '' + secs + ''
-    console.log('score: ', score)
+    //console.log('score: ', score)
     return score
 }

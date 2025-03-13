@@ -108,6 +108,10 @@ function renderBoard(board, rowIdx, colIdx){
             } else if (cell.minesAroundCount !== 0) {
                 tdAddition = ` <span>${cell.minesAroundCount}</span> ` // For a cell that is NEXT TO A MINE add the number
             } 
+            if (cell.isMarked){
+                tdAddition = ` <span>${MARK}</span> `
+                className = ''
+            }
             if (i === rowIdx && j === colIdx){
                 //console.log('strHTML of clicked: ', strHTML)
                 strHTML += `\t<td data-i="${i}" data-j="${j}" class="cell clicked"
@@ -147,7 +151,7 @@ function expandReveal(board, rowIdx, colIdx) {
             if (i === rowIdx && j === colIdx) continue
             if (j < 0 || j >= board[0].length) continue
             var currCell = board[i][j]
-            console.log(currCell)
+            //console.log(currCell)
             if (!currCell.isMine && currCell.isCovered && !currCell.isMarked) {
                 gGame.revealedCount++
                 board[i][j].isCovered = false
@@ -158,4 +162,31 @@ function expandReveal(board, rowIdx, colIdx) {
             
         }
     }
+}
+
+function expandFullReveal(board, rowIdx, colIdx) {
+    if (gEmptyCells.length){
+        gEmptyCells.shift()
+    } 
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+        if (i < 0 || i >= board.length) continue
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            if (i === rowIdx && j === colIdx) continue
+            if (j < 0 || j >= board[0].length) continue
+            var currCell = board[i][j]
+            //console.log(currCell)
+            if (!currCell.isMine && currCell.isCovered && !currCell.isMarked) {
+                gGame.revealedCount++
+                board[i][j].isCovered = false
+                var elCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`)
+                elCell.classList.remove('notClicked')
+                elCell.classList.add('clicked')
+                if (!currCell.minesAroundCount){
+                    gEmptyCells.push({i, j})
+                } 
+            }
+        }
+    }
+    if (!gEmptyCells.length) return
+    expandFullReveal (board, gEmptyCells[0].i, gEmptyCells[0].j)
 }

@@ -32,7 +32,7 @@ table {
 .clicked {
     padding: 15px;
     border: 1px solid #888;
-    background: linear-gradient(to bottom, #a1a0a0, #fdfbfb);
+    background: linear-gradient(to bottom, #969595, #e3e2e2);
     /* background-color: rgb(61, 140, 145); */
 }
 

@@ -10,12 +10,13 @@ const SMILE = '😀'
 var gInterval = null
 var gTimer = null
 var gIsHint = false
+var gEmptyCells = []
 
 var gBoard = []
 
 var gLevel = { 
-    SIZE: 0, 
-    MINES: 0 
+    SIZE: 4, 
+    MINES: 2 
 } 
 
 var gGame = { 
@@ -38,7 +39,6 @@ function onInit(size){
     gBoard = buildBoard()
     console.log('gBoard: ', gBoard)
     renderBoard(gBoard)
-    startTimer()
 }
 
 function refreshGame(){
@@ -62,6 +62,7 @@ function onCellClicked(elCell, i, j){
     if (!gGame.revealedCount){
         placeCellsContent (gBoard, i, j)
         renderBoard (gBoard, i, j)
+        startTimer()
     }
     if (gIsHint){
         if (!gBoard[i][j].isCovered) return
@@ -88,7 +89,7 @@ function handleMines(elCell){
 
 function handleBlanksAndNums(elCell, i, j){
     if (!gBoard[i][j].minesAroundCount) {
-        expandReveal(gBoard, i, j)
+        expandFullReveal(gBoard, i, j)
     } 
     elCell.classList.remove('notClicked')
     elCell.classList.add('clicked')
