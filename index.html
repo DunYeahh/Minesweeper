@@ -15,20 +15,56 @@
         <button onclick="onInit(4)">Beginner</button>
         <button onclick="onInit(8)">Medium</button>
         <button onclick="onInit(12)">Expert</button>
+        <!-- <div class="game-elements-container"></div> -->
+        <div class="timer">00:00</div>
         <div class="lives">❤️❤️❤️</div>
+        <div class="hints-container">
+            <button onclick="onHint(this)">💡</button>
+            <button onclick="onHint(this)">💡</button>
+            <button onclick="onHint(this)">💡</button>
+        </div>
         
         <table class="board">
             <tbody class="board-cell"> </tbody>
         </table>
 
-        <div class="modal hide">
-            <h2 class="msg"></h2>
-            <button class="restart-btn" onclick="onInit()">Play Again</button>
+        
+        <div class="score-tables-container">
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Best Score</th>
+                </tr>
+                <tr>
+                    <td>Beginner</td>
+                    <td class="beginner-best"></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Best Score</th>
+                </tr>
+                <tr>
+                    <td>Medium</td>
+                    <td class="medium-best"></td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th>Level</th>
+                    <th>Best Score</th>
+                </tr>
+                <tr>
+                    <td>Expert</td>
+                    <td class="expert-best"></td>
+                </tr>
+            </table>
         </div>
-
-        <footer>
-            <p>Dana Ziv</p>
-        </footer>
+        
+                <footer>
+                    <p>Dana Ziv</p>
+                </footer>
         
         <script src="js/main.js"></script>
         <script src="js/utils.js"></script>
