@@ -75,19 +75,20 @@ footer {
     background: linear-gradient(to bottom, #a1a0a0, #c42020);
 }
 
-.lives {
+.lives, .timer {
     /* background-color: rgb(251, 251, 251); */
     /* border-width: 0.2px;
     border: solid; */
-    width: 75px;
-    height: 25px;
+    /* margin: auto; */
+    /* font-size: 15px; */
+    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
+    width: 150px;
+    height: 50px;
     text-align: center;
-    margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 15px;
-    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
     border: 2px solid #888;
+    display: inline;
 }
 
 .smile-btn {
@@ -111,7 +112,14 @@ button {
     background: linear-gradient(to bottom, #8e8989, #d0d0d0);
 }
 
-.timer {
+.btn-container button:active {
+    padding: 8px;
+    border: 1px solid rgb(23, 148, 40);
+    background: linear-gradient(to bottom, #969595, #363434);
+    transform: scale(0.95);
+}
+
+/* .timer {
     margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -119,8 +127,8 @@ button {
     padding: 5px;
     border: 2px solid #888;
     width: 65px;
-    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
-}
+    background: linear-gradient(to bottom, #f8bbbb, #dc8888);
+} */
 
 .hints-container button {
     width: 30px;
@@ -128,6 +136,20 @@ button {
 
 .hinted {
     background: linear-gradient(to bottom, rgb(23, 148, 40),  #7aea8b);
+}
+
+.safe-click, .undo-btn {
+    display: inline;
+    height: 35px;
+    margin: auto;
+}
+
+.undo-btn {
+    width: 70px;
+}
+
+.safe-click {
+    width: 100px;
 }
 
 .score-tables-container th, .score-tables-container td {

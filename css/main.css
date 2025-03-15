@@ -1,11 +1,28 @@
+.dark-mode {
+    filter: invert(100%);
+}
+
 body {
-    background:rgb(230, 186, 171);
+    /* background:rgb(230, 186, 171); */
+    background: #afaeae;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }
 
 h1 {
     font-size: 25px;
+}
+
+.style-btn {
+    position: relative;
+}
+
+.style-btn button {
+    position: fixed;
+    margin-left: 5px;
+    top: 0;  /* Aligns to the top */
+    left: 0; /* Aligns to the left */
+
 }
 
 table {
@@ -39,6 +56,13 @@ table {
     display: none;
 }
 
+.btn-container button:active {
+    padding: 8px;
+    border: 1px solid #888;
+    background: linear-gradient(to bottom, #969595, #e3e2e2);
+    transform: scale(0.95);
+}
+
 .clicked {
     padding: 8px;
     border: 1px solid #888;
@@ -46,31 +70,33 @@ table {
 }
 
 footer {
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
     font-size: 10px;
+    /* background-color: #cba2a2; */
     }
 
 .clickedMine {
     background: linear-gradient(to bottom, #a1a0a0, #c42020);
 }
 
-.lives {
+.lives, .timer{
     /* background-color: rgb(251, 251, 251); */
     /* border-width: 0.2px;
     border: solid; */
-    width: 75px;
-    height: 25px;
+    /* margin: auto; */
+    /* font-size: 15px; */
+    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
+    width: 150px;
+    height: 50px;
     text-align: center;
-    margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 15px;
-    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
     border: 2px solid #888;
+    display: inline;
 }
 
 .smile-btn {
@@ -84,7 +110,7 @@ footer {
 
 button {
     width: 75px;
-    height: 30px;
+    height: 25px;
     cursor: pointer;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -94,16 +120,18 @@ button {
     background: linear-gradient(to bottom, #ffffff, #d0d0d0);
 }
 
-.timer {
+/* .timer {
     margin: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 20px;
-    padding: 8px;
+    font-size: 15px;
+    padding: 5px;
     border: 2px solid #888;
-    width: 75px;
-    /* background: linear-gradient(to bottom, #f8bbbb, #dc8888); */
-}
+    width: 100px;
+    height: 35px;
+    display: inline;
+    background: linear-gradient(to bottom, #f8bbbb, #dc8888);
+} */
 
 .hints-container button {
     width: 30px;
@@ -128,13 +156,17 @@ button {
     display: inline;
 }
 
-.safe-click {
-    display: block;
-    margin: auto;
-    margin-bottom: 8px;
-    width: 100px;
-    height: 40px;
+.score-tables-container {
+    margin-bottom: 50px;
 }
+
+.safe-click, .undo-btn {
+    display: inline;
+    height: 35px;
+    margin: auto;
+    width: 85px;
+}
+
 
 .finished {
     background: linear-gradient(to bottom, #a1a0a0, #c42020);

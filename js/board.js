@@ -36,10 +36,6 @@ for (var i = 0; i < gLevel.SIZE; i++) {
             board[i][j] = cell
         }
     }
-    //console.table ('board before mines: ', board)
-
-    //console.table ('board after mines: ', board)
-
     return board
 }
 
@@ -112,7 +108,7 @@ function renderBoard(board, rowIdx, colIdx){
                 tdAddition = ` <span>${MARK}</span> `
                 className = ''
             }
-            if (i === rowIdx && j === colIdx){
+            if (i === rowIdx && j === colIdx && !gGame.revealedCount){
                 //console.log('strHTML of clicked: ', strHTML)
                 strHTML += `\t<td data-i="${i}" data-j="${j}" class="cell clicked"
             onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu="onCellMarked(this, ${i}, ${j}); return false;" >${tdAddition}

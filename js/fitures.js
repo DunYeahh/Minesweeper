@@ -37,7 +37,9 @@ function startTimer() {
 }
 
   function onHint(elHint){
+    if (!gGame.isOn) return
     if (!gGame.revealedCount) return
+    if (gIsHint) return
     if (elHint.classList.contains('clicked')) return
     elHint.classList.add('clicked')
     gIsHint = true
@@ -133,6 +135,8 @@ function getScore(mins, secs){
 }
 
 function onSafeClick(elBtn){
+    if (!gGame.isOn) return
+    if (!gGame.revealedCount) return
     //console.log(gGame.safeClicksLeft)
     if (!gGame.safeClicksLeft){
         elBtn.classList.add('finished')
@@ -142,30 +146,28 @@ function onSafeClick(elBtn){
         return
     } 
     //console.log(gGame.safeClicksLeft)
-    elBtn.classList.add('clicked')
-    setTimeout(() => {
-        elBtn.classList.remove('clicked')
-    }, 150);
+    // elBtn.classList.add('clicked')
+    // setTimeout(() => {
+    //     elBtn.classList.remove('clicked')
+    // }, 150);
     gGame.safeClicksLeft--
     elBtn.querySelector('span').innerHTML = gGame.safeClicksLeft
     showSafeClick(gBoard, elBtn)
 }
 
 function showSafeClick(board, elBtn){
-    console.log('entered')
     var isDone = false
     var areSafe = areSafeCells(board)
     while(!isDone && areSafe){
     var randCell = getRandCell(0,board.length)
     var currCell = board[randCell.i][randCell.j]
-    console.log('currCell: ', currCell)
+    //console.log('currCell: ', currCell)
     if (currCell.isCovered
         && !currCell.isMarked
         && !currCell.isMine){
             var elCell = document.querySelector(`[data-i="${randCell.i}"][data-j="${randCell.j}"]`)
             elCell.classList.remove('notClicked')
             elCell.classList.add('clicked')
-            console.log('elCell: ', elCell)
 
             setTimeout(() => {
                 elCell.classList.add('notClicked')
@@ -192,13 +194,28 @@ function areSafeCells(board){
 }
 
 function onStyleMode(elbtn){
+    document.querySelector('body').classList.toggle('dark-mode')
+    
     isDark=!isDark
 
     if (isDark){
-        document.querySelector("link[rel='stylesheet']").href = "css/dark-mode.css"
+        // document.querySelector("link[rel='stylesheet']").href = "css/dark-mode.css"
         elbtn.querySelector('span').innerHTML = 'Light'
     } else{
-        document.querySelector("link[rel='stylesheet']").href = "css/light-mode.css"
+        // document.querySelector("link[rel='stylesheet']").href = "css/light-mode.css"
         elbtn.querySelector('span').innerHTML = 'Dark'
     } 
+}
+
+function onUndo(elBtn){ //still have bugs, didn't get to completing :(
+    if (gGame.previousMoves.length === 0) return
+    gGame.previousMoves.shift()
+    gGame.undoCount++
+    gBoard = gGame.previousMoves[0].board
+    gGame.livesCount = gGame.previousMoves[0].livesCount
+    gGame.markedCount = gGame.previousMoves[0].markedCount
+    gGame.revealedCount = gGame.previousMoves[0].revealedCount
+    renderBoard(gBoard)
+    console.log('gGame.previousMoves: ', gGame.previousMoves)
+
 }

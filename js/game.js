@@ -27,7 +27,9 @@ var gGame = {
     markedCount: 0,
     livesCount: 3,
     score: Infinity,
-    safeClicksLeft: 3
+    safeClicksLeft: 3,
+    previousMoves: [],
+    undoCount: 0
 } 
 
 function onInit(size){
@@ -38,18 +40,25 @@ function onInit(size){
     defineBoard(size)
     gGame.isOn = true
     gBoard = buildBoard()
+    saveCurrState()
     console.log('gBoard: ', gBoard)
+    // console.table('gGame.previousMoves: ', gGame.previousMoves)    
     renderBoard(gBoard)
 }
 
 function refreshGame(){
-    gGame.isOn = true
-    gGame.isWin = false
-    gGame.revealedCount = 0
-    gGame.markedCount = 0
-    gGame.livesCount = 3
-    gGame.safeClicksLeft = 3
 
+    gGame = { 
+        isOn: false,
+        isWin: false, 
+        revealedCount: 0, 
+        markedCount: 0,
+        livesCount: 3,
+        score: Infinity,
+        safeClicksLeft: 3,
+        previousMoves: [],
+        undoCount: 0
+    } 
     refreshHints()
     renderLives(3)
     clearInterval(gInterval)
@@ -57,12 +66,14 @@ function refreshGame(){
     var elSmileBtn = document.querySelector('.smile-btn')
     elSmileBtn.innerHTML = SMILE
     document.querySelector('.timer').innerText = '00:00'
+    document.querySelector('.safe-click').innerHTML = `SAFE CLICK <br><span>3</span> clicks left`
 }
 
 function onCellClicked(elCell, i, j){
+    
     if (gBoard[i][j].isMarked || !gBoard[i][j].isCovered) return
     if (!gGame.isOn) return
-    if (!gGame.revealedCount){
+    if (!gGame.revealedCount && gGame.undoCount === 0){
         placeCellsContent (gBoard, i, j)
         renderBoard (gBoard, i, j)
         startTimer()
@@ -81,6 +92,8 @@ function onCellClicked(elCell, i, j){
     
     if (gBoard[i][j].isMine) handleMines(elCell)
     else handleBlanksAndNums(elCell, i, j)
+
+    saveCurrState()
 
     checkGameOver()   
 }
@@ -112,9 +125,9 @@ function onCellMarked(elCell, i, j) {
         var value = getCellHTML(i, j)
         elCell.innerHTML = value
         gGame.markedCount--
-        //console.log('gGame.markedCount: ', gGame.markedCount)
     }
     elCell.classList.toggle('notClicked')
+    saveCurrState()
     checkGameOver()
 }
 
@@ -142,4 +155,14 @@ function checkGameOver(){
         elSmileBtn.innerHTML = LOSE
         gGame.isOn = false
     }
+}
+
+function saveCurrState(){
+
+    var board = gBoard.slice()
+    var livesCount = gGame.livesCount
+    var markedCount = gGame.markedCount
+    var revealedCount = gGame.revealedCount
+    gGame.previousMoves.unshift({board, livesCount, markedCount, revealedCount})
+    console.table('gGame.previousMoves: ', gGame.previousMoves)
 }
